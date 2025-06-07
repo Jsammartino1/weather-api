@@ -33,7 +33,6 @@ app.use((req, res, next) => {
     const longitudeInt = parseInt(longitude);
     const latitudeIntBool = latitudeInt > -90 && latitudeInt < 90;
     const longitudeIntBool = longitudeInt > -180 && longitudeInt < 180;
-    console.log(latitudeIntBool, longitudeIntBool);
     if (!latitudeIntBool || !longitudeIntBool) {
         res
             .status(422)
