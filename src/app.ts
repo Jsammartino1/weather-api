@@ -18,7 +18,7 @@ app.use((req, res, next) => {
 
   const latitudeIntCheck = isNumeric(latitude);
   const longitudeIntCheck = isNumeric(longitude);
-
+  
   if (!latitudeIntCheck || !longitudeIntCheck) {
     res
       .status(422)
@@ -47,9 +47,6 @@ app.use((req, res, next) => {
 });
 
 app.get("/weather", async (req, res) => {
-  //const latitude = req.query.lat;
-  //const longitude = req.query.lon;
-
   const weatherDataRes = await fetch(
     `https://api.openweathermap.org/data/3.0/onecall?lat=${(req as any).latitude}&lon=${(req as any).longitude}&appid=${apiKey}&units=metric&exclude=daily,hourly,minutely`
   );

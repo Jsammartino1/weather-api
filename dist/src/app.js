@@ -50,8 +50,6 @@ app.use((req, res, next) => {
     }
 });
 app.get("/weather", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    //const latitude = req.query.lat;
-    //const longitude = req.query.lon;
     const weatherDataRes = yield fetch(`https://api.openweathermap.org/data/3.0/onecall?lat=${req.latitude}&lon=${req.longitude}&appid=${apiKey}&units=metric&exclude=daily,hourly,minutely`);
     if (!weatherDataRes.ok) {
         res

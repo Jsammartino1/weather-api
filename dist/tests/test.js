@@ -25,15 +25,20 @@ describe('GET /', () => {
         const response = yield (0, supertest_1.default)(app_1.app).get(`/weather?lat=${goodCoords[0]}&lon=${goodCoords[1]}`);
         expect(response.status).toBe(200);
     }));
+    it('should return 400 for no coordinates input', () => __awaiter(void 0, void 0, void 0, function* () {
+        const response = yield (0, supertest_1.default)(app_1.app).get(`/weather`);
+        expect(response.status).toBe(400);
+        expect(response.text).toBe('ERROR: Required values for latitude and or longitude not provided.');
+    }));
     it('should return 422 for out of bounds coordinates', () => __awaiter(void 0, void 0, void 0, function* () {
         const response = yield (0, supertest_1.default)(app_1.app).get(`/weather?lat=${outOfBoundsCoords[0]}&lon=${outOfBoundsCoords[1]}`);
         expect(response.status).toBe(422);
-        expect(response.text).toBe('Invalid latitude or longitude format. Please verify latitude and longitude are in decimal degrees notation.');
+        expect(response.text).toBe('ERROR: Invalid latitude or longitude format. Please verify latitude and longitude are in decimal degrees notation.');
     }));
     it('should return 422 for incorrectly formatted coordinates', () => __awaiter(void 0, void 0, void 0, function* () {
         const response = yield (0, supertest_1.default)(app_1.app).get(`/weather?lat=${wrongFormatCoords[0]}&lon=${wrongFormatCoords[1]}`);
         expect(response.status).toBe(422);
-        expect(response.text).toBe('Invalid latitude or longitude format. Please verify latitude and longitude are in decimal degrees notation.');
+        expect(response.text).toBe('ERROR: Invalid latitude or longitude format. Please verify latitude and longitude are in decimal degrees notation.');
     }));
 });
 //# sourceMappingURL=test.js.map
