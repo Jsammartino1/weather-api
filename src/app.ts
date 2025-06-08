@@ -12,7 +12,7 @@ app.use((req, res, next) => {
     res
       .status(400)
       .send(
-        "Required values for latitude and or longitude not provided."
+        "ERROR: Required values for latitude and or longitude not provided."
       );
   }
 
@@ -23,7 +23,7 @@ app.use((req, res, next) => {
     res
       .status(422)
       .send(
-        "Invalid latitude or longitude format. Please verify latitude and longitude are in decimal degrees notation."
+        "ERROR: Invalid latitude or longitude format. Please verify latitude and longitude are in decimal degrees notation."
       );
   }
 
@@ -37,7 +37,7 @@ app.use((req, res, next) => {
     res
       .status(422)
       .send(
-        "Invalid latitude or longitude format. Please verify latitude and longitude are in decimal degrees notation."
+        "ERROR: Invalid latitude or longitude format. Please verify latitude and longitude are in decimal degrees notation."
       );
   } else {
     (req as any).latitude = latitude;

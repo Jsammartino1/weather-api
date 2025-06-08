@@ -25,14 +25,14 @@ app.use((req, res, next) => {
     if (latitude === undefined || longitude === undefined) {
         res
             .status(400)
-            .send("Required values for latitude and or longitude not provided.");
+            .send("ERROR: Required values for latitude and or longitude not provided.");
     }
     const latitudeIntCheck = (0, utilities_1.isNumeric)(latitude);
     const longitudeIntCheck = (0, utilities_1.isNumeric)(longitude);
     if (!latitudeIntCheck || !longitudeIntCheck) {
         res
             .status(422)
-            .send("Invalid latitude or longitude format. Please verify latitude and longitude are in decimal degrees notation.");
+            .send("ERROR: Invalid latitude or longitude format. Please verify latitude and longitude are in decimal degrees notation.");
     }
     const latitudeInt = parseInt(latitude);
     const longitudeInt = parseInt(longitude);
@@ -41,7 +41,7 @@ app.use((req, res, next) => {
     if (!latitudeIntBool || !longitudeIntBool) {
         res
             .status(422)
-            .send("Invalid latitude or longitude format. Please verify latitude and longitude are in decimal degrees notation.");
+            .send("ERROR: Invalid latitude or longitude format. Please verify latitude and longitude are in decimal degrees notation.");
     }
     else {
         req.latitude = latitude;
