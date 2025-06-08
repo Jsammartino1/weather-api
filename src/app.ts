@@ -5,13 +5,13 @@ const port = 3000;
 const apiKey = process.env.WEATHER_API_KEY;
 
 app.use((req, res, next) => {
-  const latitude: any = req.query.lat;
-  const longitude: any = req.query.lon;
+  const latitude: string | undefined = req.query.lat as string;
+  const longitude: string | undefined = req.query.lon as string;
 
-  const latitudeIntCheck = isNumeric(latitude)
-  const longitudeIntCheck = isNumeric(longitude)
+  const latitudeIntCheck = isNumeric(latitude);
+  const longitudeIntCheck = isNumeric(longitude);
 
-  if (!latitudeIntCheck || !longitudeIntCheck ) {
+  if (!latitudeIntCheck || !longitudeIntCheck) {
     res
       .status(422)
       .send(
@@ -32,19 +32,23 @@ app.use((req, res, next) => {
         "Invalid latitude or longitude format. Please verify latitude and longitude are in decimal degrees notation."
       );
   } else {
+    (req as any).latitude = latitude;
+    (req as any).longitude = longitude;
     next();
   }
 });
 
 app.get("/weather", async (req, res) => {
-  const latitude = req.query.lat;
-  const longitude = req.query.lon;
+  //const latitude = req.query.lat;
+  //const longitude = req.query.lon;
 
   const weatherDataRes = await fetch(
-    `https://api.openweathermap.org/data/3.0/onecall?lat=${latitude}&lon=${longitude}&appid=${apiKey}&units=metric&exclude=daily,hourly,minutely`
+    `https://api.openweathermap.org/data/3.0/onecall?lat=${(req as any).latitude}&lon=${(req as any).longitude}&appid=${apiKey}&units=metric&exclude=daily,hourly,minutely`
   );
   if (!weatherDataRes.ok) {
-    res.status(500).send(`Downstream server returned error code ${weatherDataRes.status}`)
+    res
+      .status(500)
+      .send(`Downstream server returned error code ${weatherDataRes.status}`);
   }
   const weatherDataResJson = await weatherDataRes.json();
 
@@ -59,11 +63,11 @@ app.get("/weather", async (req, res) => {
     alerts: alerts,
   };
   res.setHeader("Content-Type", "application/json");
-  res.send(JSON.stringify(responseObject));
+  res.send(responseObject);
 });
 
 const server = app.listen(port, () => {
   return console.log(`Express is listening at http://localhost:${port}`);
 });
 
-export { app, server }
+export { app, server };

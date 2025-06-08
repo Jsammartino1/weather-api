@@ -39,13 +39,15 @@ app.use((req, res, next) => {
             .send("Invalid latitude or longitude format. Please verify latitude and longitude are in decimal degrees notation.");
     }
     else {
+        req.latitude = latitude;
+        req.longitude = longitude;
         next();
     }
 });
 app.get("/weather", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const latitude = req.query.lat;
-    const longitude = req.query.lon;
-    const weatherDataRes = yield fetch(`https://api.openweathermap.org/data/3.0/onecall?lat=${latitude}&lon=${longitude}&appid=${apiKey}&units=metric&exclude=daily,hourly,minutely`);
+    //const latitude = req.query.lat;
+    //const longitude = req.query.lon;
+    const weatherDataRes = yield fetch(`https://api.openweathermap.org/data/3.0/onecall?lat=${req.latitude}&lon=${req.longitude}&appid=${apiKey}&units=metric&exclude=daily,hourly,minutely`);
     if (!weatherDataRes.ok) {
         res.status(500).send(`Downstream server returned error code ${weatherDataRes.status}`);
     }
@@ -60,7 +62,7 @@ app.get("/weather", (req, res) => __awaiter(void 0, void 0, void 0, function* ()
         alerts: alerts,
     };
     res.setHeader("Content-Type", "application/json");
-    res.send(JSON.stringify(responseObject));
+    res.send(responseObject);
 }));
 const server = app.listen(port, () => {
     return console.log(`Express is listening at http://localhost:${port}`);
