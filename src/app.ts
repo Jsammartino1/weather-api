@@ -8,6 +8,14 @@ app.use((req, res, next) => {
   const latitude: string | undefined = req.query.lat as string;
   const longitude: string | undefined = req.query.lon as string;
 
+  if (latitude === undefined || longitude === undefined) {
+    res
+      .status(400)
+      .send(
+        "Required values for latitude and or longitude not provided."
+      );
+  }
+
   const latitudeIntCheck = isNumeric(latitude);
   const longitudeIntCheck = isNumeric(longitude);
 

@@ -22,6 +22,11 @@ const apiKey = process.env.WEATHER_API_KEY;
 app.use((req, res, next) => {
     const latitude = req.query.lat;
     const longitude = req.query.lon;
+    if (latitude === undefined || longitude === undefined) {
+        res
+            .status(400)
+            .send("Required values for latitude and or longitude not provided.");
+    }
     const latitudeIntCheck = (0, utilities_1.isNumeric)(latitude);
     const longitudeIntCheck = (0, utilities_1.isNumeric)(longitude);
     if (!latitudeIntCheck || !longitudeIntCheck) {
