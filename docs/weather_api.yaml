@@ -1,0 +1,77 @@
+openapi: 3.0.0
+servers:
+  -url: http://localhost:3000/
+info:
+  description: Simple API for current weather info
+  version: "1.0.0"
+  title: Weather API
+  contact:
+    GitHub: Jsammartino1
+tags:
+  - name: Weather
+    description: Operations available to regular developers
+paths:
+  /weather:
+    get:
+      tags:
+        - Weather
+      summary: gets curret weather info
+      description: |
+        Pass in latitude and longitude of the location you'd like to get current weather data for
+      parameters:
+        - in: query
+          name: lat
+          description: pass in the latitude in decimal degrees notation
+          required: true
+          schema:
+            type: integer
+            minimum: -90
+            maximum: 90
+        - in: query
+          name: lon
+          description: pass in the longitude in decimal degrees notation
+          schema:
+            type: integer
+            format: int32
+            minimum: -180
+            maximum: 180
+      responses:
+        '200':
+          description: search results matching criteria
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/weatherResponse'
+        '422':
+          description: bad input parameter
+        '500':
+          description: server error
+components:
+  schemas:
+    weatherResponse:
+      type: object
+      properties:
+        condition:
+          type: string
+        temperatureRange:
+          type: string
+        alerts:
+          type: array
+          items:
+            type: object
+            properties:
+              sender_name:
+                type: string
+              event:
+                type: string
+              start:
+                type: number
+              end:
+                type: number
+              description:
+                type: string
+              tags:
+                type: array
+                items:
+                  type: string

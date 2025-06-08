@@ -49,7 +49,9 @@ app.get("/weather", (req, res) => __awaiter(void 0, void 0, void 0, function* ()
     //const longitude = req.query.lon;
     const weatherDataRes = yield fetch(`https://api.openweathermap.org/data/3.0/onecall?lat=${req.latitude}&lon=${req.longitude}&appid=${apiKey}&units=metric&exclude=daily,hourly,minutely`);
     if (!weatherDataRes.ok) {
-        res.status(500).send(`Downstream server returned error code ${weatherDataRes.status}`);
+        res
+            .status(500)
+            .send(`Downstream server returned error code ${weatherDataRes.status}`);
     }
     const weatherDataResJson = yield weatherDataRes.json();
     //chose to use description instead of main here as it was more descriptive.
