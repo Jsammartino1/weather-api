@@ -26,5 +26,5 @@ WEATHER_API_KEY=<YOUR KEY HERE> npm start
 Tests can be ran similar to starting the server. Example below.
 
 ```
-WEATHER_API_KEY=df33158c6a8ac9a0380f95391b255428 npm test
+WEATHER_API_KEY=<YOUR KEY HERE> npm test
 ```
